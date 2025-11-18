@@ -9,7 +9,7 @@
     "test": "jest --runInBand",
     "migrate": "node ./scripts/run-migrate.js",
     "migrate:win": "psql \"%DATABASE_URL%\" -f migrations/001_create_links.sql",
-    "migrate:direct": "psql \"postgres://Gjaya:123456789@localhost:5432/tinylink\" -f migrations/001_create_links.sql"
+    "migrate:direct": "psql \"postgres://gjaya:123456789@localhost:5432/tinylink\" -f migrations/001_create_links.sql" //database updated
   },
   "dependencies": {
     "express": "^4.18.2",
