@@ -1,0 +1,26 @@
+{
+  "name": "tinylink",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src src/server.js",
+    "test": "jest --runInBand",
+    "migrate": "node ./scripts/run-migrate.js",
+    "migrate:win": "psql \"%DATABASE_URL%\" -f migrations/001_create_links.sql",
+    "migrate:direct": "psql \"postgres://Gjaya:123456789@localhost:5432/tinylink\" -f migrations/001_create_links.sql"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "pg": "^8.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "jest": "^29.6.1",
+    "supertest": "^6.3.3"
+  }
+}

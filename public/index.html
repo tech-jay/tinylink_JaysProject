@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>TinyLink - Dashboard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <div class="max-w-4xl mx-auto p-6">
+      <header class="mb-6">
+        <h1 class="text-2xl font-semibold">TinyLink</h1>
+        <p class="text-sm text-gray-600">Shorten URLs, view clicks, delete links.</p>
+      </header>
+
+      <section class="bg-white p-4 rounded shadow mb-6">
+        <form id="createForm" class="grid gap-3 md:grid-cols-3 items-end">
+          <div class="md:col-span-2">
+            <label class="text-sm">Target URL</label>
+            <input id="target" type="text" placeholder="https://example.com/long/path" class="w-full border rounded p-2" />
+          </div>
+          <div>
+            <label class="text-sm">Custom code (optional)</label>
+            <input id="codeInput" type="text" placeholder="6-8 chars A-Za-z0-9" class="w-full border rounded p-2" />
+          </div>
+          <div class="md:col-span-3 flex gap-2">
+            <button id="createBtn" class="bg-indigo-600 text-white px-4 py-2 rounded disabled:opacity-60">Create</button>
+            <div id="msg" class="text-sm"></div>
+          </div>
+        </form>
+      </section>
+
+      <section class="bg-white p-4 rounded shadow">
+        <h2 class="font-medium mb-3">Links</h2>
+        <div id="tableWrap" class="overflow-auto">
+          <table class="min-w-full text-sm" id="linksTable">
+            <thead class="text-left">
+              <tr>
+                <th class="p-2">Short</th>
+                <th class="p-2">Target</th>
+                <th class="p-2">Clicks</th>
+                <th class="p-2">Last clicked</th>
+                <th class="p-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="linksBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script src="/main.js"></script>
+  </body>
+</html>

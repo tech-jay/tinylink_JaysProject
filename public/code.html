@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>TinyLink - Stats</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <div class="max-w-2xl mx-auto p-6">
+      <a href="/" class="text-sm text-indigo-600 mb-4 inline-block">&larr; Dashboard</a>
+      <h1 class="text-2xl font-semibold mb-2">Link stats</h1>
+      <div id="content" class="bg-white p-4 rounded shadow">
+        <div id="loading">Loading...</div>
+        <div id="error" class="text-red-600 hidden"></div>
+        <div id="stats" class="hidden space-y-2">
+          <div><strong>Code:</strong> <span id="code"></span></div>
+          <div><strong>Short URL:</strong> <a id="short" href="#" target="_blank"></a></div>
+          <div><strong>Target:</strong> <a id="target" href="#" target="_blank"></a></div>
+          <div><strong>Clicks:</strong> <span id="clicks"></span></div>
+          <div><strong>Last clicked:</strong> <span id="last"></span></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        const path = location.pathname; // /code/:code
+        const code = path.split('/').pop();
+        const loading = document.getElementById('loading');
+        const err = document.getElementById('error');
+        const stats = document.getElementById('stats');
+
+        fetch(`/api/links/${encodeURIComponent(code)}`)
+          .then(r => {
+            if (!r.ok) throw r;
+            return r.json();
+          })
+          .then(data => {
+            loading.style.display = 'none';
+            stats.classList.remove('hidden');
+            document.getElementById('code').textContent = data.code;
+            document.getElementById('short').textContent = `${location.origin}/${data.code}`;
+            document.getElementById('short').href = `${location.origin}/${data.code}`;
+            document.getElementById('target').textContent = data.target;
+            document.getElementById('target').href = data.target;
+            document.getElementById('clicks').textContent = data.clicks;
+            document.getElementById('last').textContent = data.last_clicked ? new Date(data.last_clicked).toLocaleString() : 'Never';
+          })
+          .catch(async (e) => {
+            loading.style.display = 'none';
+            err.classList.remove('hidden');
+            const txt = (e && e.json) ? (await e.json()).error : 'Not found';
+            err.textContent = txt || 'Error';
+          });
+      })();
+    </script>
+  </body>
+</html>
